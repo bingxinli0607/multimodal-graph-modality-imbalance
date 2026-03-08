@@ -2,6 +2,7 @@
 
 ## test
 
+### first(no_seed)
 Dataset: Cora (Planetoid)
 View-A: citation graph
 View-B: kNN graph
@@ -14,6 +15,7 @@ epoch : 50
 | +moddrop | 0.50 | 0.50 | 0.8170 |
 | only_moddrop | 0.00 | 0.50 | 0.8180 |
 
+### second(not_fixed_drop_edge)
 Dataset: Cora (Planetoid)  
 View-A: citation graph  
 View-B: kNN graph  
@@ -26,11 +28,32 @@ seeds: 1, 2, 3
 | missing-B | 0.50 | 0.00 | 0.8160 | 0.8210 | 0.8000 | 0.8123 |
 | +moddrop | 0.50 | 0.50 | 0.8070 | 0.8040 | 0.8070 | 0.8060 |
 
-## Observation
+#### Observation
 
-Under the current 3-seed, 50-epoch setting, introducing 50% missing edges in View-B did not significantly degrade performance.
-Moreover, simple Modality Dropout did not outperform the missing-B baseline.
+Under the fixed evaluation setting (`fixed_drop_edge`), introducing 50% missing edges in View-B did not significantly hurt performance on Cora.
+Moreover, adding simple Modality Dropout did not outperform the missing-B baseline in this initial single-seed experiment.
 
-This suggests that the current dual-view average fusion may already have some robustness under this setup, or that dropping View-B edges partly removes noisy connections.
-However, this conclusion is still preliminary because the experiments were conducted with a small number of seeds and a relatively short training schedule.
-Future work will use more seeds, more epochs, and multiple missing rates for a more reliable comparison.
+A possible explanation is that dropping part of View-B edges may remove noisy or less useful kNN connections, so the model can still rely on View-A and the remaining View-B structure.
+However, this is still a preliminary result. More seeds and more missing rates are needed before drawing a reliable conclusion.
+
+### third(fixed_drop_edge)
+
+Dataset: Cora (Planetoid)  
+View-A: citation graph  
+View-B: kNN graph  
+epoch: 200  
+seeds: 1
+
+| setting | miss_b (eval) | moddrop (train) | seed1 |
+|---|---:|---:|---:|
+| baseline | 0.00 | 0.00 | 0.8020  |
+| missing-B | 0.50 | 0.00 | 0.8100 |
+| +moddrop | 0.50 | 0.50 | 0.8090  |
+
+#### Observation
+
+Under the fixed evaluation setting (`fixed_drop_edge`), introducing 50% missing edges in View-B did not significantly hurt performance on Cora.
+Moreover, adding simple Modality Dropout did not outperform the missing-B baseline in this initial single-seed experiment.
+
+A possible explanation is that dropping part of View-B edges may remove noisy or less useful kNN connections, so the model can still rely on View-A and the remaining View-B structure.
+However, this is still a preliminary result. More seeds and more missing rates are needed before drawing a reliable conclusion.
