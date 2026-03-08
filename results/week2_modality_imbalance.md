@@ -1,4 +1,4 @@
-# Week2 Modality Imbalance (Missing View-B Edges)
+# Day2 Modality Imbalance (Missing View-B Edges)
 
 ## test
 
