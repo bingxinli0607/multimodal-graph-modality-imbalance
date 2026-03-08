@@ -1,4 +1,4 @@
-# Week1 Baseline (Dual-view GCN, Cora)
+# Day1 Baseline (Dual-view GCN, Cora)
 
 Environment:
 - Python 3.10 (conda env: mmgi)
